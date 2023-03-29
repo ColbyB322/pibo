@@ -21,7 +21,7 @@ db.connect(error => { //opening connection
   });
 
 
- app.get("/user_register", (req,res)=>{ //Returns records from user register
+app.get("/user_register_view", (req, res)=>{ //Returns records from user register
     db.query("SELECT * FROM USER_REGISTER", (err, result) => {
         if (err){
             console.log("Error selecting.")
@@ -29,6 +29,18 @@ db.connect(error => { //opening connection
         res.send(result);
     })
 })
+
+app.post("/user_register", (req, res)=>{ //Add user's register info to the database
+    db.query("INSERT INTO user_register (email, user_password, guardian_name) VALUES ('?','?','?')",
+    [email, user_password, guardian_name],
+    (err, result) => {
+    if (err){
+        console.log("Error inserting.")
+    }
+    res.send(result);
+  })   
+})
+
 
 db.end; //closing connection
 
